@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<h2>Статистика лаборатории</h2>
+
+<div class="stats-container">
+    <div class="stat-block">
+        <h3>Оборудование по категориям</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Категория</th>
+                    <th>Количество</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in equipment_amount %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="stat-block">
+        <h3>Сотрудники по должностям</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Должность</th>
+                    <th>Количество</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in staff_amount %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="stat-block">
+        <h3>Ближайшие обслуживания</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Дата</th>
+                    <th>Оборудование</th>
+                    <th>Ответственный</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in maintenance_planned %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.maintenanceDate }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.surname }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

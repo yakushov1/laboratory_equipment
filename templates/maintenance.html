@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Плановое обслуживание{% endblock %}
+
+{% block content %}
+<h1>Плановое обслуживание оборудования</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Оборудование</th>
+            <th>Статус</th>
+            <th>Ответственный</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Строка для добавления -->
+        <tr class="add-row">
+            <td>Новый</td>
+            <td>
+                <form method="POST" action="/maintenance/add">
+                    <input type="date" name="maintenanceDate" required>
+            </td>
+            <td>
+                    <select name="equipmentId" required>
+                        <option value="">-- Выберите --</option>
+                        {% for equipment in equipment_list %}
+                            <option value="{{ equipment.id }}">{{ equipment.title }}</option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <select name="statusId" required>
+                        {% for status in statuses %}
+                            <option value="{{ status.id }}">{{ status.title }}</option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <select name="staffId" required>
+                        <option value="">-- Выберите --</option>
+                        {% for staff_member in staff_list %}
+                            <option value="{{ staff_member.id }}">
+                                {{ staff_member.surname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <button type="submit" class="add-btn">Добавить</button>
+                </form>
+            </td>
+        </tr>
+        
+        <!-- Существующие записи -->
+        {% for item in maintenance %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>
+                <form method="POST" action="/maintenance/update/{{ item.id }}">
+                    <input type="date" name="maintenanceDate" value="{{ item.maintenanceDate }}" required>
+            </td>
+            <td>
+                    <select name="equipmentId" required>
+                        {% for equipment in equipment_list %}
+                            <option value="{{ equipment.id }}" {% if equipment.id == item.equipmentId %}selected{% endif %}>
+                                {{ equipment.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <select name="statusId" required>
+                        {% for status in statuses %}
+                            <option value="{{ status.id }}" {% if status.id == item.statusId %}selected{% endif %}>
+                                {{ status.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <select name="staffId" required>
+                        {% for staff_member in staff_list %}
+                            <option value="{{ staff_member.id }}" {% if staff_member.id == item.staffId %}selected{% endif %}>
+                                {{ staff_member.surname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <button type="submit" class="save-btn">Сохранить</button>
+                </form>
+                <form method="POST" action="/maintenance/delete/{{ item.id }}">
+                    <button type="submit" class="delete-btn" onclick="return confirm('Удалить запись?')">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

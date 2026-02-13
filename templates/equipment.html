@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Оборудование лаборатории{% endblock %}
+
+{% block content %}
+<h1>Оборудование лаборатории</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Категория</th>
+            <th>Серийный номер</th>
+            <th>Название</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Строка для добавления -->
+        <tr class="add-row">
+            <td>Новый</td>
+            <td>
+                <form method="POST" action="/equipment/add">
+                    <select name="categoryId">
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.title }}</option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <input type="text" name="serialNo" placeholder="Серийный номер" required>
+            </td>
+            <td>
+                    <input type="text" name="title" placeholder="Название" required>
+            </td>
+            <td>
+                    <select name="statusId">
+                        {% for status in statuses %}
+                            <option value="{{ status.id }}">{{ status.title }}</option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <button type="submit" class="add-btn">Добавить</button>
+                </form>
+            </td>
+        </tr>
+        
+        <!-- Существующие записи -->
+        {% for item in equipment %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>
+                <form method="POST" action="/equipment/update/{{ item.id }}">
+                    <select name="categoryId">
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if cat.id == item.categoryId %}selected{% endif %}>
+                                {{ cat.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <input type="text" name="serialNo" value="{{ item.serialNo }}" required>
+            </td>
+            <td>
+                    <input type="text" name="title" value="{{ item.title }}" required>
+            </td>
+            <td>
+                    <select name="statusId">
+                        {% for status in statuses %}
+                            <option value="{{ status.id }}" {% if status.id == item.statusId %}selected{% endif %}>
+                                {{ status.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </td>
+            <td>
+                    <button type="submit" class="save-btn">Сохранить</button>
+                </form>
+                <form method="POST" action="/equipment/delete/{{ item.id }}">
+                    <button type="submit" class="delete-btn" onclick="return confirm('Удалить оборудование?')">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
