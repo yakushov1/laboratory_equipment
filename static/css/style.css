@@ -1,21 +1,21 @@
 body {
     font-family: Arial;
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 20px auto; /* внешний отступ */
     background: #f5f5f5;
 }
 
 header {
     background: #2c3e50;
     color: white;
-    padding: 15px;
+    padding: 15px; /* внутренний отступ */
     margin-bottom: 20px;
 }
 
 nav a {
     color: white;
     margin-right: 15px;
-    text-decoration: none;
+    text-decoration: none; /* убрать подчеркивание у ссылок */
 }
 
 nav a:hover {
@@ -37,7 +37,7 @@ main {
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* границы соседних ячеек в одну, убрать двойные линии  */ 
     margin: 15px 0;
 }
 
@@ -64,7 +64,7 @@ input, select {
 button {
     padding: 6px 12px;
     border: none;
-    cursor: pointer;
+    cursor: pointer; /* указатель при наведении - палец */
     margin: 2px;
 }
 
@@ -73,14 +73,14 @@ button {
 .delete-btn { background: #f44336; color: white; }
 
 .stats-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: flex; /* Включает Flexbox */
+    flex-wrap: wrap; /*На узком экране блоки автоматически "переезжают" вниз*/
+    gap: 10px; /* расстояние между элементами */
 }
 
 .stat-block {
-    flex: 1;
-    min-width: 250px;
+    flex: 1; /* все блоки занимают равную ширину и растягиваются, заполняя контейнер. */
+    min-width: 250px; /* минимальная ширина блока */
     border: 1px solid #ddd;
     padding: 10px;
 }
