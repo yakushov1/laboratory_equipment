@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import database
 
 app = Flask(__name__)
+# Flask по умолчанию использует клиентские сессии (данные хранятся в зашифрованном виде в cookie браузера)
+# и для шифрования нужен секретный ключ
 app.secret_key = 'ваш_секретный_ключ'
 
 ##############################################################################
