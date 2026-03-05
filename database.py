@@ -22,7 +22,7 @@ def execute_query(query, params=None, fetchall=True, commit=False):
         query: SQL запрос
         params: параметры для запроса
         fetchall: True - вернуть все строки, False - вернуть одну строку
-        commit: True - сделать commit после выполнения
+        commit: True - сделать commit (по сути, "сохранить") после выполнения - актуально для POST-запросов
     Returns:
         Результат запроса или None
     """
@@ -41,7 +41,7 @@ def execute_query(query, params=None, fetchall=True, commit=False):
                 return cursor.fetchone()
     except Exception as e:
         if commit:
-            conn.rollback()
+            conn.rollback() # отменить изменения, если возникла ошибка
         raise e
     finally:
         conn.close()
@@ -54,10 +54,10 @@ def test_connection():
     """Проверяет подключение к БД"""
     try:
         result = execute_query("SELECT 1 as test")
-        print("✅ Подключение к БД успешно!")
+        print("Подключение к БД успешно!")
         return True
     except Exception as e:
-        print(f"❌ Ошибка подключения: {e}")
+        print(f"Ошибка подключения: {e}")
         return False
 
 ###################################################
